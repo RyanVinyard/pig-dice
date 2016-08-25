@@ -1,0 +1,87 @@
+#winview {
+  display: none;
+}
+
+body {
+  background-image: url("../farm.jpg");
+}
+
+.jumbotron {
+  margin: 30px;
+  background-color: rgba(245, 228, 200, 0.80);
+  border-radius: 200px !important;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Ewert', cursive;
+}
+
+
+
+img {
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  border: solid black 8px;
+  border-radius: 18px;
+  box-shadow: 0 6px #999;
+}
+
+#dice:hover {
+  cursor: pointer;
+}
+
+#dice:active {
+  border: solid red 6px;
+}
+
+h3 {
+  font-size: 18pt;
+  text-align: center;
+
+}
+#hold {
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  border-radius: 10px;
+  width: 100px;
+  height: auto;
+  background-color: #C94D68;
+  box-shadow: 0 6px #ffb3b3;
+}
+
+#hold:active {
+  background-color: #C94D68;
+  box-shadow: 0 3px #ffe6e6;
+  transform: translateY(4px);
+}
+
+#yourRoll {
+  font-weight: bold;
+  font-size: 30pt;
+  font-family: 'Bungee Shade', cursive;
+}
+
+#thisTurnScore {
+  font-weight: bold;
+  font-size: 30pt;
+  font-family: 'Bungee Shade', cursive;
+}
+
+#player1score {
+  color: red;
+  font-size: 30pt;
+  font-family: 'Bungee Shade', cursive;
+}
+
+#player2score {
+  color: red;
+  font-family: 'Bungee Shade', cursive;
+  font-size: 30pt;
+}
+
+h2 {
+  text-align: center;
+}

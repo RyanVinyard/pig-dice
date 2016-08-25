@@ -1,74 +1,99 @@
+function Player(player, turn) {
+  this.playerLabel = player;
+  this.turn = turn;
+  // this.diceRoll = 0;
+  this.turnScore = 0;
+  this.playerScore = 0;
 
+}
 
+// Player.prototype.roll = function(clickDiceRoll) {
+//   this.turnScore = this.turnScore + clickDiceRoll;
+//   return this.turnScore;
+// }
 
+Player.prototype.turnSwitch = function() {
+  console.log(this.turn);
+  if (this.turn === true) {
+    this.turn = false;
+    // console.log(this.turn + " after " + this.playerLabel);
+    return this.turn;
+  }
+  else {
+    this.turn = true;
+    // console.log(this.turn + " after "  + this.playerLabel);
+    return this.turn;
+  }
+}
+
+Player.prototype.calculateTurnScore = function(clickDiceRoll) {
+  this.turnScore = this.turnScore + clickDiceRoll;
+  return this.turnScore;
+}
+
+Player.prototype.calculatePlayerScore = function() {
+  this.playerScore = this.turnScore + this.playerScore;
+  return this.playerScore;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+// User interface Logic //
 $(document).ready(function() {
-  var turnPlayer1 = true;
-  var turnPlayer2 = false;
-  var player1Turn = [];
-  var player1Score = [];
-  var player2Turn = [];
-  var player2Score = [];
+
+  var player1 = new Player("Player 1", true);
+  var player2 = new Player("Player 2", false);
 
   $("#dice").click(function() {
-  // console.log(turnPlayer1 + "player1");
-  // console.log(turnPlayer2 + "player2");
-  var clickDiceRoll =  (Math.floor((Math.random() *6) + 1))
-
-
-  if (clickDiceRoll === 1) {
-    console.log("u fucked ur turn is over");
-    if (turnPlayer1 === true) {
-      player1Turn = [];
-      turnPlayer1 = false;
-      turnPlayer2 = true;
-    }
-    else {
-      player2Turn = [];
-      turnPlayer2 = false;
-      turnPlayer1 = true;
-    }
-  }
-
-  else {
-    if (turnPlayer1 === true) {
-      player1Turn.push(clickDiceRoll);
-    }
-    else {
-      player2Turn.push(clickDiceRoll);
-    }
-  }
-  function add(a, b) {
-    return a + b;
-  }
-  var currentScore1 = player1Turn.reduce(add, 0);
-  var currentScore2 = player2Turn.reduce(add, 0);
-
-
-  if (turnPlayer1 === true) {
+    var clickDiceRoll =  (Math.floor((Math.random() *6) + 1))
     $("#yourRoll").text(clickDiceRoll);
-    $("#thisTurnScore").text(currentScore1);
-  }
-  else {
-    $("#thisTurnScore").text(currentScore2);
-  }
+
+    if (clickDiceRoll === 1) {
+      player1.turnSwitch();
+      player2.turnSwitch();
+      player1.turnScore = 0;
+      player2.turnScore = 0;
+    }
+
+    else {
+      if (player1.turn === true) {
+        player1.calculateTurnScore(clickDiceRoll);
+      }
+      else {
+        player2.calculateTurnScore(clickDiceRoll);
+      }
+    }
+    var currentScore1 = player1.turnScore;
+    var currentScore2 = player2.turnScore;
+    if (player1.turn === true) {
+      $("#thisTurnScore").text(currentScore1);
+    }
+    else {
+      $("#thisTurnScore").text(currentScore2);
+    }
+  });
 
   $("#hold").click(function() {
-    if (turnPlayer1 === true && turnPlayer2 === false) {
-      player1Score = player1Score.concat(player1Turn);
-      player1Turn = [];
-      turnPlayer1 = false;
-      turnPlayer2 = true;
+    player1.calculatePlayerScore();
+    player2.calculatePlayerScore();
+    player1.turnSwitch();
+    player1.turnScore = 0;
+    player2.turnScore = 0;
+    $("#player1score").text(player1.playerScore);
+    $("#player2score").text(player2.playerScore);
+    if (player1.playerScore >= 100) {
+      $("#winner").text("Player 1")
+      $("#gameview").hide("slow");
+      $("#winview").fadeIn("slow");
     }
-    else {
-      player2Score = player2Score.concat(player2Turn);
-      player2Turn = [];
-      turnPlayer2 = false;
-      turnPlayer1 = true;
+    else if (player2.playerScore >= 100) {
+      $("#winner").text("Player 2")
+      $("#gameview").hide("slow");
+      $("#winview").fadeIn("slow");
     }
-    console.log(turnPlayer1);
-      $("#player1score").text(player1Score.reduce(add, 0));
-      $("#player2score").text(player2Score.reduce(add, 0));
-
-    });
   });
+
+
 });
